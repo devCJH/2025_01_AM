@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.koreaIT.JAM.dto.Article;
+import com.koreaIT.JAM.util.Util;
+
 class Main {
 	static List<Article> articles;
 	static int articleId;
@@ -35,7 +38,7 @@ class Main {
 				String body = sc.nextLine();
 				articleId++;
 				
-				Article article = new Article(articleId, title, body);
+				Article article = new Article(articleId, Util.getDateStr(), Util.getDateStr(), title, body);
 				articles.add(article);
 				
 				System.out.printf("%d번 글이 생성되었습니다\n", articleId);
@@ -45,11 +48,11 @@ class Main {
 					continue;
 				}
 				
-				System.out.println("번호	|	제목");
+				System.out.println("번호	|	제목	|	작성일");
 				
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d	|	%s\n", article.id, article.title);
+					System.out.printf("%d	|	%s	|%s\n", article.id, article.title, article.updateDate);
 				}
 			} else if (cmd.startsWith("article detail ")) {
 				
@@ -72,6 +75,8 @@ class Main {
 				
 				System.out.println("== 게시물 상세보기 ==");
 				System.out.printf("번호 : %d\n", foundArticle.id);
+				System.out.printf("작성일 : %s\n", foundArticle.regDate);
+				System.out.printf("수정일 : %s\n", foundArticle.updateDate);
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.body);
 			} else if (cmd.startsWith("article modify ")) {
@@ -100,8 +105,31 @@ class Main {
 				
 				foundArticle.title = title;
 				foundArticle.body = body;
+				foundArticle.updateDate = Util.getDateStr();
 				
 				System.out.printf("%d번 게시물을 수정했습니다\n", id);
+			} else if (cmd.startsWith("article delete ")) {
+				
+				String[] cmdBits = cmd.split(" ");
+				int id = Integer.parseInt(cmdBits[2]);
+
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if (id == article.id) {
+						foundArticle = article;
+						break;
+					}
+				}
+				
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다\n", id);
+					continue;
+				}
+				
+				articles.remove(foundArticle);
+				
+				System.out.printf("%d번 게시물을 삭제했습니다\n", id);
 			}
 		}
 		
@@ -113,19 +141,7 @@ class Main {
 	static void makeTestData() {
 		System.out.println("테스트용 게시물 데이터 3개를 생성했습니다");
 		for (int i = 1; i <= 3; i++) {
-			articles.add(new Article(++articleId, "제목" + i, "내용" + i));
+			articles.add(new Article(++articleId, Util.getDateStr(), Util.getDateStr(), "제목" + i, "내용" + i));
 		}
-	}
-}
-
-class Article {
-	int id;
-	String title;
-	String body;
-	
-	Article(int id, String title, String body) {
-		this.id = id;
-		this.title = title;
-		this.body = body;
 	}
 }
