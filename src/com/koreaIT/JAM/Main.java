@@ -5,14 +5,20 @@ import java.util.List;
 import java.util.Scanner;
 
 class Main {
+	static List<Article> articles;
+	static int articleId;
+	
+	static {
+		articles = new ArrayList<>();
+		articleId = 0;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("== 프로그램 시작 ==");
 		
+		makeTestData();
+		
 		Scanner sc = new Scanner(System.in);
-		
-		int articleId = 0;
-		
-		List<Article> articles = new ArrayList<>();
 		
 		while (true) {
 			System.out.printf("명령어) ");
@@ -68,12 +74,47 @@ class Main {
 				System.out.printf("번호 : %d\n", foundArticle.id);
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.body);
+			} else if (cmd.startsWith("article modify ")) {
+				
+				String[] cmdBits = cmd.split(" ");
+				int id = Integer.parseInt(cmdBits[2]);
+
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if (id == article.id) {
+						foundArticle = article;
+						break;
+					}
+				}
+				
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다\n", id);
+					continue;
+				}
+				
+				System.out.printf("수정할 제목 : ");
+				String title = sc.nextLine();
+				System.out.printf("수정할 내용 : ");
+				String body = sc.nextLine();
+				
+				foundArticle.title = title;
+				foundArticle.body = body;
+				
+				System.out.printf("%d번 게시물을 수정했습니다\n", id);
 			}
 		}
 		
 		sc.close();
 		
 		System.out.println("== 프로그램 끝 ==");
+	}
+	
+	static void makeTestData() {
+		System.out.println("테스트용 게시물 데이터 3개를 생성했습니다");
+		for (int i = 1; i <= 3; i++) {
+			articles.add(new Article(++articleId, "제목" + i, "내용" + i));
+		}
 	}
 }
 
