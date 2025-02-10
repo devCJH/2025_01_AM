@@ -18,4 +18,8 @@ public class MemberService {
 		memberDao.joinMember(loginId, loginPw, name);
 	}
 
+	public void makeTestData() {
+		memberDao.makeTestData();
+	}
+
 }

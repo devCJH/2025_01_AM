@@ -12,6 +12,7 @@ public class MemberController {
 	public MemberController(Scanner sc) {
 		this.sc = sc;
 		this.memberService = new MemberService();
+		this.memberService.makeTestData();
 	}
 
 	public void doJoin() {
@@ -74,5 +75,4 @@ public class MemberController {
 		
 		System.out.println("회원가입이 완료되었습니다");
 	}
-
 }
