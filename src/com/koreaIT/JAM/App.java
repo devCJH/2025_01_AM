@@ -4,22 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.koreaIT.JAM.controller.MemberController;
 import com.koreaIT.JAM.dto.Article;
-import com.koreaIT.JAM.dto.Member;
 import com.koreaIT.JAM.util.Util;
 
 public class App {
 	
 	private List<Article> articles;
 	private int articleId;
-	private List<Member> members;
-	private int memberId;
 	
 	public App() {
 		articles = new ArrayList<>();
 		articleId = 0;
-		members = new ArrayList<>();
-		memberId = 0;
 	}
 	
 	public void run() {
@@ -28,6 +24,8 @@ public class App {
 		makeTestData();
 		
 		Scanner sc = new Scanner(System.in);
+		
+		MemberController memberController = new MemberController(sc);
 		
 		while (true) {
 			System.out.printf("명령어) ");
@@ -43,58 +41,7 @@ public class App {
 			}
 			
 			if (cmd.equals("member join")) {
-				String loginId = null;
-				String loginPw = null;
-				String loginPwChk = null;
-				String name = null;
-				
-				while (true) {
-					System.out.printf("아이디 : ");
-					loginId = sc.nextLine().trim();
-					
-					if (loginId.length() == 0) {
-						System.out.println("필수입력 정보입니다");
-						continue;
-					}
-					break;
-				}
-				
-				while (true) {
-					System.out.printf("비밀번호 : ");
-					loginPw = sc.nextLine().trim();
-					
-					if (loginPw.length() == 0) {
-						System.out.println("필수입력 정보입니다");
-						continue;
-					}
-					
-					System.out.printf("비밀번호 확인 : ");
-					loginPwChk = sc.nextLine().trim();
-					
-					if (loginPw.equals(loginPwChk) == false) {
-						System.out.println("비밀번호가 일치하지 않습니다");
-						continue;
-					}
-					break;
-				}
-				
-				while (true) {
-					System.out.printf("이름 : ");
-					name = sc.nextLine().trim();
-
-					if (name.length() == 0) {
-						System.out.println("필수입력 정보입니다");
-						continue;
-					}
-					break;
-				}
-				
-				memberId++;
-				
-				Member member = new Member(memberId, Util.getDateStr(), Util.getDateStr(), loginId, loginPw, name);
-				members.add(member);
-				
-				System.out.println("회원가입이 완료되었습니다");
+				memberController.doJoin();
 			} else if (cmd.equals("article write")) {
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
