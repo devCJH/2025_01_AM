@@ -30,12 +30,4 @@ public class MemberDao {
 		Member member = new Member(memberId, Util.getDateStr(), Util.getDateStr(), loginId, loginPw, name);
 		members.add(member);
 	}
-	
-	public void makeTestData() {
-		System.out.println("테스트용 회원 데이터 3개를 생성했습니다");
-		for (int i = 1; i <= 3; i++) {
-			members.add(new Member(++memberId, Util.getDateStr(), Util.getDateStr(), "test" + i, "test" + i, "유저" + i));
-		}
-	}
-
 }

@@ -6,17 +6,41 @@ import java.util.Scanner;
 import com.koreaIT.JAM.dto.Article;
 import com.koreaIT.JAM.service.ArticleService;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 
-	private Scanner sc;
 	private ArticleService articleService;
+	private String cmd;
 	
 	public ArticleController(Scanner sc) {
 		this.sc = sc;
 		this.articleService = new ArticleService();
-		this.articleService.makeTestData();
 	}
 
+	@Override
+	public void doAction(String cmd, String methodName) {
+		this.cmd = cmd;
+		
+		switch (methodName) {
+		case "write":
+			doWrite();
+			break;
+		case "list":
+			showList();
+			break;
+		case "detail":
+			showDetail();
+			break;
+		case "modify":
+			doModify();
+			break;
+		case "delete":
+			doDelete();
+			break;
+		default:
+			System.out.println("존재하지 않는 명령어 입니다");
+		}
+	}
+	
 	public void doWrite() {
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
@@ -44,7 +68,7 @@ public class ArticleController {
 		}
 	}
 
-	public void showDetail(String cmd) {
+	public void showDetail() {
 		int id = articleService.getCmdNum(cmd);
 
 		if (id == -1) {
@@ -67,7 +91,7 @@ public class ArticleController {
 		System.out.printf("내용 : %s\n", foundArticle.getBody());
 	}
 
-	public void doModify(String cmd) {
+	public void doModify() {
 
 		int id = articleService.getCmdNum(cmd);
 
@@ -92,8 +116,8 @@ public class ArticleController {
 		
 		System.out.printf("%d번 게시물을 수정했습니다\n", id);
 	}
-
-	public void doDelete(String cmd) {
+	
+	public void doDelete() {
 
 		int id = articleService.getCmdNum(cmd);
 
@@ -112,5 +136,13 @@ public class ArticleController {
 		articleService.deleteArticle(foundArticle);
 		
 		System.out.printf("%d번 게시물을 삭제했습니다\n", id);
+	}
+
+	@Override
+	public void makeTestData() {
+		System.out.println("테스트용 게시물 데이터 3개를 생성했습니다");
+		for (int i = 1; i <= 3; i++) {
+			articleService.writeArticle("제목" + i, "내용" + i);
+		}
 	}
 }

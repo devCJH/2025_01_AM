@@ -4,17 +4,26 @@ import java.util.Scanner;
 
 import com.koreaIT.JAM.service.MemberService;
 
-public class MemberController {
+public class MemberController extends Controller {
 
-	private Scanner sc;
 	private MemberService memberService;
 	
 	public MemberController(Scanner sc) {
 		this.sc = sc;
 		this.memberService = new MemberService();
-		this.memberService.makeTestData();
 	}
 
+	@Override
+	public void doAction(String cmd, String methodName) {
+		switch (methodName) {
+		case "join":
+			doJoin();
+			break;
+		default:
+			System.out.println("존재하지 않는 명령어 입니다");
+		}
+	}
+	
 	public void doJoin() {
 		String loginId = null;
 		String loginPw = null;
@@ -74,5 +83,13 @@ public class MemberController {
 		memberService.joinMember(loginId, loginPw, name);
 		
 		System.out.println("회원가입이 완료되었습니다");
+	}
+
+	@Override
+	public void makeTestData() {
+		System.out.println("테스트용 회원 데이터 3개를 생성했습니다");
+		for (int i = 1; i <= 3; i++) {
+			memberService.joinMember("test" + i, "test" + i, "유저" + i);
+		}
 	}
 }

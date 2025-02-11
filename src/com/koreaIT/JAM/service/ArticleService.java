@@ -42,8 +42,4 @@ public class ArticleService {
 			return -1;
 		}
 	}
-
-	public void makeTestData() {
-		articleDao.makeTestData();
-	}
 }

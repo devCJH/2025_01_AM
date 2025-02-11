@@ -45,12 +45,4 @@ public class ArticleDao {
 	public void deleteArticle(Article foundArticle) {
 		articles.remove(foundArticle);
 	}
-	
-	public void makeTestData() {
-		System.out.println("테스트용 게시물 데이터 3개를 생성했습니다");
-		for (int i = 1; i <= 3; i++) {
-			articles.add(new Article(++articleId, Util.getDateStr(), Util.getDateStr(), "제목" + i, "내용" + i));
-		}
-	}
-
 }

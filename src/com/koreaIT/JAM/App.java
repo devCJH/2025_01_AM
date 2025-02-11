@@ -3,6 +3,7 @@ package com.koreaIT.JAM;
 import java.util.Scanner;
 
 import com.koreaIT.JAM.controller.ArticleController;
+import com.koreaIT.JAM.controller.Controller;
 import com.koreaIT.JAM.controller.MemberController;
 
 public class App {
@@ -13,6 +14,9 @@ public class App {
 		
 		MemberController memberController = new MemberController(sc);
 		ArticleController articleController = new ArticleController(sc);
+		
+		memberController.makeTestData();
+		articleController.makeTestData();
 		
 		while (true) {
 			System.out.printf("명령어) ");
@@ -27,21 +31,22 @@ public class App {
 				continue;
 			}
 			
-			if (cmd.equals("member join")) {
-				memberController.doJoin();
-			} else if (cmd.equals("article write")) {
-				articleController.doWrite();
-			} else if (cmd.equals("article list")) {
-				articleController.showList();
-			} else if (cmd.startsWith("article detail ")) {
-				articleController.showDetail(cmd);
-			} else if (cmd.startsWith("article modify ")) {
-				articleController.doModify(cmd);
-			} else if (cmd.startsWith("article delete ")) {
-				articleController.doDelete(cmd);
+			String[] cmdBits = cmd.split(" ");
+			String controllerName = cmdBits[0];
+			String methodName = cmdBits[1];
+			
+			Controller controller = null;
+			
+			if (controllerName.equals("member")) {
+				controller = memberController;
+			} else if (controllerName.equals("article")) {
+				controller = articleController;
 			} else {
 				System.out.println("존재하지 않는 명령어 입니다");
+				continue;
 			}
+			
+			controller.doAction(cmd, methodName);
 		}
 		
 		sc.close();
