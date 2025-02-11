@@ -39,4 +39,13 @@ public class MemberDao {
 		}
 		return null;
 	}
+
+	public String getWriterName(int memberId) {
+		for (Member member : members) {
+			if (member.getId() == memberId) {
+				return member.getLoginId();
+			}
+		}
+		return null;
+	}
 }

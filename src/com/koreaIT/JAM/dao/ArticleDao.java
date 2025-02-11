@@ -16,9 +16,9 @@ public class ArticleDao {
 		this.articleId = 0;
 	}
 
-	public int writeArticle(String title, String body) {
+	public int writeArticle(int id, String title, String body) {
 		articleId++;
-		Article article = new Article(articleId, Util.getDateStr(), Util.getDateStr(), title, body);
+		Article article = new Article(articleId, Util.getDateStr(), Util.getDateStr(), id, title, body);
 		articles.add(article);
 		return articleId;
 	}

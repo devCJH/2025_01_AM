@@ -2,17 +2,17 @@ package com.koreaIT.JAM.controller;
 
 import java.util.Scanner;
 
+import com.koreaIT.JAM.container.Container;
 import com.koreaIT.JAM.dto.Member;
 import com.koreaIT.JAM.service.MemberService;
 
 public class MemberController extends Controller {
 
 	private MemberService memberService;
-	private Member loginedMember;
 	
 	public MemberController(Scanner sc) {
 		this.sc = sc;
-		this.memberService = new MemberService();
+		this.memberService = Container.memberService;
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class MemberController extends Controller {
 	}
 	
 	private void doJoin() {
-		if (this.loginedMember != null) {
+		if (loginedMember != null) {
 			System.out.println("로그아웃 후 이용해주세요");
 			return;
 		}
@@ -100,7 +100,7 @@ public class MemberController extends Controller {
 
 	private void doLogin() {
 		
-		if (this.loginedMember != null) {
+		if (loginedMember != null) {
 			System.out.println("로그아웃 후 이용해주세요");
 			return;
 		}
@@ -132,18 +132,18 @@ public class MemberController extends Controller {
 			return;
 		}
 		
-		this.loginedMember = member;
+		loginedMember = member;
 		
 		System.out.printf("[ %s ] 회원님 환영합니다~!\n", member.getName());
 	}
 	
 	private void doLogout() {
-		if (this.loginedMember == null) {
+		if (loginedMember == null) {
 			System.out.println("로그인 후 이용해주세요");
 			return;
 		}
 		
-		this.loginedMember = null;
+		loginedMember = null;
 		System.out.println("정상적으로 로그아웃 되었습니다");
 	}
 	

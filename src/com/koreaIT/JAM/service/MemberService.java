@@ -1,5 +1,6 @@
 package com.koreaIT.JAM.service;
 
+import com.koreaIT.JAM.container.Container;
 import com.koreaIT.JAM.dao.MemberDao;
 import com.koreaIT.JAM.dto.Member;
 
@@ -8,7 +9,7 @@ public class MemberService {
 	private MemberDao memberDao;
 
 	public MemberService() {
-		this.memberDao = new MemberDao();
+		this.memberDao = Container.memberDao;
 	}
 	
 	public boolean isLoginIdDupCheck(String loginId) {
@@ -21,5 +22,9 @@ public class MemberService {
 
 	public Member getMemberByLoginId(String loginId) {
 		return memberDao.getMemberByLoginId(loginId);
+	}
+
+	public String getWriterName(int memberId) {
+		return memberDao.getWriterName(memberId);
 	}
 }
