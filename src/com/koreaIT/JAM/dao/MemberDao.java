@@ -30,4 +30,13 @@ public class MemberDao {
 		Member member = new Member(memberId, Util.getDateStr(), Util.getDateStr(), loginId, loginPw, name);
 		members.add(member);
 	}
+
+	public Member getMemberByLoginId(String loginId) {
+		for (Member member : members) {
+			if (member.getLoginId().equals(loginId)) {
+				return member;
+			}
+		}
+		return null;
+	}
 }

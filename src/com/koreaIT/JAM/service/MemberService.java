@@ -1,6 +1,7 @@
 package com.koreaIT.JAM.service;
 
 import com.koreaIT.JAM.dao.MemberDao;
+import com.koreaIT.JAM.dto.Member;
 
 public class MemberService {
 
@@ -16,5 +17,9 @@ public class MemberService {
 
 	public void joinMember(String loginId, String loginPw, String name) {
 		memberDao.joinMember(loginId, loginPw, name);
+	}
+
+	public Member getMemberByLoginId(String loginId) {
+		return memberDao.getMemberByLoginId(loginId);
 	}
 }

@@ -41,7 +41,7 @@ public class ArticleController extends Controller {
 		}
 	}
 	
-	public void doWrite() {
+	private void doWrite() {
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
 		System.out.printf("내용 : ");
@@ -52,7 +52,7 @@ public class ArticleController extends Controller {
 		System.out.printf("%d번 글이 생성되었습니다\n", id);
 	}
 
-	public void showList() {
+	private void showList() {
 		List<Article> articles = articleService.getArticles();
 		
 		if (articles.size() == 0) {
@@ -68,7 +68,7 @@ public class ArticleController extends Controller {
 		}
 	}
 
-	public void showDetail() {
+	private void showDetail() {
 		int id = articleService.getCmdNum(cmd);
 
 		if (id == -1) {
@@ -91,7 +91,7 @@ public class ArticleController extends Controller {
 		System.out.printf("내용 : %s\n", foundArticle.getBody());
 	}
 
-	public void doModify() {
+	private void doModify() {
 
 		int id = articleService.getCmdNum(cmd);
 
@@ -117,7 +117,7 @@ public class ArticleController extends Controller {
 		System.out.printf("%d번 게시물을 수정했습니다\n", id);
 	}
 	
-	public void doDelete() {
+	private void doDelete() {
 
 		int id = articleService.getCmdNum(cmd);
 
